@@ -2,7 +2,7 @@ package main.com.breakbreak.components;
 
 import main.com.breakbreak.util.ImageCache;
 import javax.swing.ImageIcon;
-import java.awt.Dimension; // Importación necesaria para las dimensiones
+import java.awt.Dimension;
 
 public class HeartComponent extends GameComponent {
     private static final String IMG_FULL = "heart-full";
@@ -13,11 +13,9 @@ public class HeartComponent extends GameComponent {
         super(x, y, width, height);
         this.isAlive = isAlive;
 
-        // Sincronizado con tus nombres reales de archivo en resources
         setImage(IMG_FULL, "heart.png");
         setImage(IMG_EMPTY, "heart-empty.png");
 
-        // ¡SOLUCIÓN! Forzamos a que el layout respete las dimensiones del corazón
         setPreferredSize(new Dimension(width, height));
     }
 

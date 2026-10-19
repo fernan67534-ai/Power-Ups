@@ -10,42 +10,30 @@ public class GameComponentDemoFrame {
     private JFrame frame;
 
     public GameComponentDemoFrame() {
-        // Inicializamos el contenedor JFrame en Swing nativo puro
         frame = new JFrame("BreakBreak - Vertical Layout con Bordes Art Deco");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        // ¡SOLUCIÓN!: Ajustamos las dimensiones a 780x750 para dar el espacio exacto
-        // al margen derecho útil y evitar que se congele el proceso por falta de espacio
         frame.setSize(780, 750);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
 
         JPanel rootPanel = new JPanel(new BorderLayout());
         rootPanel.setBackground(new Color(23, 23, 28));
-
-        // MARGEN CONTINUO EXTERIOR: Bordes nítidos de la ventana completa
         rootPanel.setBorder(BorderFactory.createLineBorder(new Color(45, 45, 55), 6));
 
-        // ==========================================
-        // 1. ÁREA DE JUEGO VERTICAL (LADO IZQUIERDO)
-        // ==========================================
         JPanel gameArea = new JPanel(null);
         gameArea.setPreferredSize(new Dimension(460, 700));
         gameArea.setBackground(new Color(30, 30, 35));
 
-        // CAPA DELANTERA 1: Pelota grande y Barra perfectamente centradas simétricamente en los nuevos 460px
         gameArea.add(new BallComponent(219, 380, 45, 45));
         gameArea.add(new PaddleComponent(162, 540, 160, 24));
 
-        // CAPA DELANTERA 2: Matriz de bloques ALEATORIA perfectamente equilibrada de 5x5
         int blockWidth = 76;
         int blockHeight = 22;
-        int startX = 31; // Margen exacto revisado para centrar las 5 columnas simétricamente
+        int startX = 31;
         int startY = 55;
         int gapX = 6;
         int gapY = 8;
 
-        // DECLARACIÓN REVISADA: Arreglo explícito con corchetes [] colocado correctamente
         BlockComponent.BlockType[] types = BlockComponent.BlockType.values();
         Random random = new Random();
 
@@ -59,19 +47,14 @@ public class GameComponentDemoFrame {
             }
         }
 
-        // CAPA INTERMEDIA: El marco Art Deco adaptado al nuevo ancho que incluye el divisor derecho continuo
-        BorderComponent artDecoBorder = new BorderComponent(0, 0, 460, 700);
+        BorderComponent artDecoBorder = new BorderComponent(new Rectangle(0, 0, 460, 700));
         gameArea.add(artDecoBorder);
 
-        // CAPA TRASERA: El fondo animado del Titán Colosal escalado sin recortes
         BackgroundComponent bg = new BackgroundComponent(0, 0, 460, 700);
         gameArea.add(bg);
 
         rootPanel.add(gameArea, BorderLayout.CENTER);
 
-        // ==========================================
-        // 2. PANEL HUD VERTICAL (LADO DERECHO)
-        // ==========================================
         JPanel sidePanel = new JPanel();
         sidePanel.setLayout(new BoxLayout(sidePanel, BoxLayout.Y_AXIS));
         sidePanel.setPreferredSize(new Dimension(300, 700));

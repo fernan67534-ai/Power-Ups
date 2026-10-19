@@ -5,7 +5,6 @@ import javax.swing.ImageIcon;
 
 public class BlockComponent extends GameComponent {
 
-    // Agregamos todos tus bloques reales vinculados directamente a tus imágenes .jpg
     public enum BlockType {
         AQUA("block-aqua", "block-aqua.jpg"),
         BLUE("block-blue", "block-blue.jpg"),
