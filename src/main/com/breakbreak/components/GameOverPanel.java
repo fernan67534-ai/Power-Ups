@@ -1,44 +1,56 @@
 package main.com.breakbreak.components;
 
-import javax.swing.*;
+import javax.swing.ImageIcon;
 import java.awt.*;
 
-public class GameOverPanel extends JPanel {
-    private JLabel lblTitle;
-    private JLabel lblSubtitle;
+public class GameOverPanel extends GameComponent {
 
-    public GameOverPanel() {
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setBackground(new Color(23, 23, 28, 230)); // Fondo semitransparente elegante
-        setBorder(BorderFactory.createLineBorder(new Color(212, 175, 55), 2)); // Borde dorado Art Déco
-        setBounds(80, 240, 300, 200);
-
-        add(Box.createVerticalStrut(30));
-        lblTitle = new JLabel("GAME OVER");
-        lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 24));
-        lblTitle.setForeground(new Color(212, 175, 55));
-        lblTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
-        add(lblTitle);
-
-        add(Box.createVerticalStrut(15));
-        lblSubtitle = new JLabel("Te has quedado sin vidas");
-        lblSubtitle.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        lblSubtitle.setForeground(Color.LIGHT_GRAY);
-        lblSubtitle.setAlignmentX(Component.CENTER_ALIGNMENT);
-        add(lblSubtitle);
-
-        setVisible(false); // Oculto por defecto
+    public GameOverPanel(int x, int y, int width, int height) {
+        super(x, y, width, height);
+        setVisible(false);
     }
 
-    public void showVictory(int score) {
-        lblTitle.setText("¡VICTORIA!");
-        lblSubtitle.setText("Puntuación final: " + String.format("%04d", score));
-        setVisible(true);
-    }
+    @Override
+    public ImageIcon getImage() { return null; }
 
-    public void showGameOver() {
-        lblTitle.setText("GAME OVER");
-        lblSubtitle.setText("Te has quedado sin vidas");
-        setVisible(true);
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        Graphics2D g2 = (Graphics2D) g.create();
+        g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        // Manto oscuro traslúcido idéntico a la pantalla de victoria
+        g2.setColor(new Color(15, 15, 15, 245));
+        g2.fillRect(0, 0, getWidth(), getHeight());
+
+        // Borde imperial desgastado
+        g2.setColor(new Color(140, 110, 35, 180));
+        g2.setStroke(new BasicStroke(3f));
+        g2.drawRect(20, 20, getWidth() - 40, getHeight() - 40);
+
+        // Letrero GAME OVER
+        g2.setFont(new Font("Monospaced", Font.BOLD, 36));
+        g2.setColor(new Color(160, 20, 30));
+        FontMetrics fm = g2.getFontMetrics();
+        String text = "GAME OVER";
+        int textX = (getWidth() - fm.stringWidth(text)) / 2;
+        g2.drawString(text, textX, 240);
+
+        g2.setFont(new Font("Serif", Font.ITALIC, 15));
+        g2.setColor(new Color(170, 170, 170));
+        String subTheme = "Las murallas han caído ante el enemigo...";
+        FontMetrics ftm = g2.getFontMetrics();
+        int subThemeX = (getWidth() - ftm.stringWidth(subTheme)) / 2;
+        g2.drawString(subTheme, subThemeX, 280);
+
+        g2.setFont(new Font("SansSerif", Font.PLAIN, 12));
+        g2.setColor(Color.GRAY);
+        FontMetrics sfm = g2.getFontMetrics();
+        String sub = "[ Presiona REINICIAR en el panel de control ]";
+        int subX = (getWidth() - sfm.stringWidth(sub)) / 2;
+        g2.drawString(sub, subX, 560);
+
+        g2.dispose();
     }
 }
